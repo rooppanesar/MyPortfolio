@@ -551,18 +551,18 @@
                     <div class="right-contact">
                         <form action="" class="contact-form">
                             <div class="input-control i-c-2">
-                                <input type="text" required placeholder="YOUR NAME">
-                                <input type="email" required placeholder="YOUR EMAIL">
+                                <input type="text" id = "name" required placeholder="YOUR NAME">
+                                <input type="email" id = "email" required placeholder="YOUR EMAIL">
                             </div>
                             <div class="input-control">
-                                <input type="text" required placeholder="ENTER SUBJECT">
+                                <input type="text" id = "subject" required placeholder="ENTER SUBJECT">
                             </div>
                             <div class="input-control">
-                                <textarea name="" id="" cols="15" rows="8" placeholder="Message Here..."></textarea>
+                                <textarea name="text" id="message" cols="15" rows="8" placeholder="Message Here..."></textarea>
                             </div>
                             
                             <div class="submit-btn">
-                                <input type="submit" value="Submit" class="submit-button">
+                                <input type="submit" value="Submit" onclick="sendEmail()" class="submit-button">
                             
 
                                 <!-- <a href="" class="main-btn">
@@ -598,5 +598,41 @@
         <i class="fas fa-adjust"></i>
     </div>
     <script src="app.js"></script>
+
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js">
+</script>
+
+<script type="text/javascript">
+    (function() {
+      emailjs.init("taEaXfPrP09Z556MM");
+    })();
+  
+    function sendEmail() {
+      event.preventDefault(); // Prevent form submission
+  
+      var params = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        subject: document.getElementById("subject").value,
+        message: document.getElementById("message").value
+      };
+  
+      emailjs.send("service_hi0fuye", "template_h1fgsoj", params)
+        .then(function(response) {
+          console.log("SUCCESS!", response.status, response.text);
+          alert("Your message was sent successfully.");
+          document.getElementById("name").value = "";
+          document.getElementById("email").value = "";
+          document.getElementById("subject").value = "";
+          document.getElementById("message").value = "";
+        }, function(error) {
+          console.log("FAILED...", error);
+          alert("Oops! Something went wrong. Please try again later.");
+        });
+    }
+  </script>
+  
+
 </body>
 </html>
